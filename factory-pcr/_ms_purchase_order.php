@@ -93,7 +93,7 @@ else if($_SESSION['username'] = $_SESSION['username']) {
 									</div>
 									<div class="col-xs-6">
 									<label class="form-group">Id Supp</label>
-									<select onchange="njir()" id="idSupp">
+									<select id="kodesup">
 										<option value="0">---Pilih---</option>
 										<?php
 										include 'config/koneksi.php';
@@ -105,12 +105,24 @@ else if($_SESSION['username'] = $_SESSION['username']) {
 										<?php endforeach ; ?>
 									</select>
 									</div>
-									<div class="">
-									<input type="text" name="namasupp" id="namasup" readonly >
+									<div class="col-md-6">
+									<input class="form-group" type="text" name="namasupp" id="namasup" readonly >
 									</div>
-
-
-
+									<br>
+									<div class="col-xs-6">
+										<label class="form-group">Alamat</label>
+										<input type="textarea" name="alamat1" id="alamat1" readonly>
+										<input class="form-group" type="textarea" name="alamat2" id="alamat2" readonly>
+									</div>
+									<br>
+									<div class=" col-xs-6">
+										<label class="form-group">Kota</label>
+										<input type="text" name="kota" id="kota" readonly>
+									</div>
+									<div class="col-md-6">
+										<label class="form-group">Telp</label>
+										<input type="text" name="telp" id="telp" readonly>
+									</div>
 
 
 
@@ -247,19 +259,26 @@ else if($_SESSION['username'] = $_SESSION['username']) {
 				<?php include 'config/footer.php'; ?>
 
 				<script type="text/javascript">
-					function njir() {
-					$(document).ready(function () {
-						var idSupp = $('#idSupp').val();
+				$(document).ready(function () {
+					$('#kodesup').change(function () {
+						var kodesup = $(this).val();
 						$.ajax({
-							url:'backend/ajax.php',
-							data:"idSupp="+idSupp,
-						}).success(function (data) {
-							var json = data,
-							obj = JSON.parse(json);
-							$('#namasupp').val(obj.namasupp);
-						});
-					});	
-				}
+							url : 'backend/ajax.php',
+							data : {
+								'kodesup' : kodesup
+							},
+							success:function (data) {
+								var json = data,
+								obj = JSON.parse(json);
+								$('#namasup').val(obj.namasup);
+								$('#alamat1').val(obj.alamat1);
+								$('#alamat2').val(obj.alamat2);							
+								$('#kota').val(obj.kota);
+								$('#telp').val(obj.telp);
+							}
+						})
+					})
+				})
 				</script>
 
 				<script type="text/javascript">
